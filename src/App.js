@@ -10,10 +10,8 @@ import { ToastContainer } from "react-toastify";
 function App() {
   const hasCodeRun = JSON.parse(localStorage.getItem(`hasCodeRun`))
   if(!hasCodeRun){
+    localStorage.setItem('limit', '0')
     localStorage.setItem('hasCodeRun', 'true')
-    for(let i = 1; i<=4; i++){
-      localStorage.setItem(`${i}`, JSON.parse(0))
-    }
   }
   return (
     <div>

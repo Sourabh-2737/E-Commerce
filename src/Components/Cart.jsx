@@ -7,7 +7,10 @@ import { addItem, deleteItem, getArray } from "../Redux/Slices/cartSlice";
 const Cart = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchProducts());
+    let limit = JSON.parse(localStorage.getItem('limit'))
+    if(limit > 0){
+      dispatch(fetchProducts());
+    }
     dispatch(getArray())
   }, [dispatch]);
   const loading = useSelector((state) => state.product.loading);
@@ -32,7 +35,7 @@ const Cart = () => {
                       <div
                         style={{
                           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${
-                            data[item.id - 1].images[0]
+                            data[item.id - 1].images
                           })`,
                         }}
                         className="bg-cover border border-gray-500 w-[7rem] h-[8rem] px-20 py-10 rounded-lg"
