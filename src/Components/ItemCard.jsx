@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { getCartItems } from "../Redux/Slices/cartSlice";
+import { getArray, getCartItems } from "../Redux/Slices/cartSlice";
 import { toast } from "react-toastify";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa"
+import { deleteProduct, getSingleProduct, setEdit, setLoading } from "../Redux/Slices/productSlice";
 
 const ItemCard = ({ url, name, price, id }) => {
   const dispatch = useDispatch();
@@ -27,6 +30,10 @@ const ItemCard = ({ url, name, price, id }) => {
       Number(value) + Number(JSON.parse(localStorage.getItem(`${name}`)));
     }
   };
+  const editProduct = () =>{
+    dispatch(setEdit(true))
+    dispatch(getSingleProduct(id))
+  }
   
 
   const handleSubmit = (id) => {
@@ -36,11 +43,19 @@ const ItemCard = ({ url, name, price, id }) => {
         autoClose: 3000,
         className : 'font-bold text-md text-black'
       });
-      dispatch(getCartItems())
+      dispatch(getArray())
   };
 
   return (
     <div className="flex flex-col p-2 gap-y-1 border-2 border-gray-500 shadow-lg shadow-gray-600 hover:scale-105 transition-all duration-500 cursor-pointer max-w-fit rounded-lg">
+      <div className="flex flex-row absolute bg-white rounded-lg bg-opacity-70 bg border border-gray-400 gap-1 p-2">
+      <FaEdit onClick={editProduct} className="text-blue-500 hover:text-blue-700 transition-all duration-200" size={'1.4rem'} />
+      <MdDelete onClick={() => {
+        dispatch(deleteProduct(id))
+        localStorage.removeItem(`${id}`)
+        dispatch(getArray())
+      }} className="text-red-400 hover:text-red-700 transition-all duration-200" size={'1.4rem'} />
+      </div>
       <div
         style={cardStyle}
         className="inline max-w-full bg-cover border border-gray-500 h-[12rem] px-20 py-10 rounded-lg"

@@ -3,15 +3,15 @@ import { SiShopify } from "react-icons/si";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "../Redux/Slices/cartSlice";
+import { getArray } from "../Redux/Slices/cartSlice";
 
 const Nav = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getCartItems())
+    dispatch(getArray())
   }, [dispatch])
+  const number = useSelector((state) => state.cart.array).length
   
-  const number = useSelector((state) => state.cart?.number || 0);
   return (
     <div className="bg-black text-white flex flex-row justify-between p-4 px-8">
       <div className="inline">
